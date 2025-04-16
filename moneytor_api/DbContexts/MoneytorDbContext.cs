@@ -1,27 +1,36 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using moneytor_api.Entities;
 using moneytor_api.Models;
 
 namespace moneytor_api.DbContexts
 {
-    public class MoneytorDbContext(DbContextOptions<MoneytorDbContext> expCategories) : DbContext(expCategories)
+    public class MoneytorDbContext(DbContextOptions<MoneytorDbContext> options) : DbContext(options)
     {
-        //DB Context for Expense Category Table:
+        //DB CONTEXTS:
+        #region A. Type/Category Masters
+        //Expense Category Table:
         public DbSet<ExpenseCategoryModel> ExpenseCategory => Set<ExpenseCategoryModel>();
 
-        //DB Context for Expense Type Table:
+        //Expense Type Table:
         public DbSet<ExpenseTypeModel> ExpenseType => Set<ExpenseTypeModel>();
 
-        //DB Context for Deduction Type Table:
+        //Deduction Type Table:
         public DbSet<DeductionTypeModel> DeductionType => Set<DeductionTypeModel>();
 
-        //DB Context for Budget Type Table:
+        //Budget Type Table:
         public DbSet<BudgetTypeModel> BudgetType => Set<BudgetTypeModel>();
-
-        //DB Context for Monthly Budget Header Table:
+        #endregion
+        #region B. Monthly Budget
+        //Header Table:
         public DbSet<MonthlyBudgetHeaderModel> MonthlyBudgetHeader => Set<MonthlyBudgetHeaderModel>();
 
-        //DB Context for Monthly Budget Detail Table:
+        //Detail Table:
         public DbSet<MonthlyBudgetDetailModel> MonthlyBudgetDetail => Set<MonthlyBudgetDetailModel>();
+        #endregion
+        #region C. User Authentication
+        public DbSet<User> Users { get; set; }
+
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,14 +43,6 @@ namespace moneytor_api.DbContexts
             // Define composite primary key for MonthlyBudgetDetailModel
             modelBuilder.Entity<MonthlyBudgetDetailModel>()
                 .HasKey(mbd => new { mbd.SeqNo });
-
-            //// Define foreign key relationship between Header and Detail
-            //modelBuilder.Entity<MonthlyBudgetDetailModel>()
-            //    .HasOne<MonthlyBudgetHeaderModel>()
-            //    .WithMany() // One header can have multiple details
-            //    .HasForeignKey(mbd => new { mbd.Month, mbd.Year })
-            //    .OnDelete(DeleteBehavior.Cascade); // Optional: Cascade delete details when the header is deleted
-
 
             modelBuilder.Entity<DeductionTypeModel>().HasData(
                 new DeductionTypeModel
