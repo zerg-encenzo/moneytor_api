@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using moneytor_api.DbContexts;
@@ -39,6 +41,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")!.Split(',');
 
+//Adding CORS:
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -50,8 +53,18 @@ builder.Services.AddCors(options =>
     });
 });
 
+//Setting all endpoints to be authenticated:
+builder.Services.AddControllers(options =>
+{
+    var policy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+    options.Filters.Add(new AuthorizeFilter(policy)); //All endpoints now require auth by default
+});
+
 var app = builder.Build();
 
+//Retrive access and refresh tokens from client (HttpOnly Cookies)
 app.Use(async (context, next) =>
 {
     var token = context.Request.Cookies["access_token"];

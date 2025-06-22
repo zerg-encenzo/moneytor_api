@@ -127,7 +127,7 @@ namespace moneytor_api.Services
             return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
         }
 
-        private const double AccessTokenExpiryTime_Minutes = 1;     //ACCESS TOKEN EXPIRY TIME (Minutes)
+        private const double AccessTokenExpiryTime_Minutes = 10;     //ACCESS TOKEN EXPIRY TIME (Minutes)
         private const double RefreshTokenExpiryTime_Days = 30;      //REFRESH TOKEN EXPIRY TIME (Days)
 
         public Task<DateTime> GetTokenExpiryTimeAsync(string tokenType)
