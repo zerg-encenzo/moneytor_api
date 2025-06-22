@@ -20,13 +20,21 @@ namespace moneytor_api.DbContexts
         //Budget Type Table:
         public DbSet<BudgetTypeModel> BudgetType => Set<BudgetTypeModel>();
         #endregion
+
+
         #region B. Monthly Budget
         //Header Table:
         public DbSet<MonthlyBudgetHeaderModel> MonthlyBudgetHeader => Set<MonthlyBudgetHeaderModel>();
 
         //Detail Table:
         public DbSet<MonthlyBudgetDetailModel> MonthlyBudgetDetail => Set<MonthlyBudgetDetailModel>();
+        //Cash Inflow Table:
+        public DbSet<CashInflowModel> CashInflow => Set<CashInflowModel>();
+        //Cash Outflow Table:
+        public DbSet<CashOutflowModel> CashOutflow => Set<CashOutflowModel>();
         #endregion
+
+
         #region C. User Authentication
         public DbSet<User> Users { get; set; }
 
@@ -44,88 +52,88 @@ namespace moneytor_api.DbContexts
             modelBuilder.Entity<MonthlyBudgetDetailModel>()
                 .HasKey(mbd => new { mbd.SeqNo });
 
-            modelBuilder.Entity<DeductionTypeModel>().HasData(
-                new DeductionTypeModel
-                {
-                    Code = "DLD",
-                    Desc = "Daily Deduction",
-                    Status = "A",
-                    UserId = "moneytor_admin"
-                },
-                new DeductionTypeModel
-                {
-                    Code = "TLD",
-                    Desc = "Total Deduction",
-                    Status = "A",
-                    UserId = "moneytor_admin"
-                }
-            );
+            //modelBuilder.Entity<DeductionTypeModel>().HasData(
+            //    new DeductionTypeModel
+            //    {
+            //        Code = "DLD",
+            //        Desc = "Daily Deduction",
+            //        Status = "A",
+            //        UserId = "moneytor_admin"
+            //    },
+            //    new DeductionTypeModel
+            //    {
+            //        Code = "TLD",
+            //        Desc = "Total Deduction",
+            //        Status = "A",
+            //        UserId = "moneytor_admin"
+            //    }
+            //);
 
-            modelBuilder.Entity<ExpenseTypeModel>().HasData(
-                new ExpenseTypeModel
-                {
-                    Code = "VAR",
-                    Desc = "Variable Expenses",
-                    Status = "A",
-                    UserId = "moneytor_admin"
-                },
-                new ExpenseTypeModel
-                {
-                    Code = "FIX",
-                    Desc = "Fixed Expenses",
-                    Status = "A",
-                    UserId = "moneytor_admin"
-                },
-                new ExpenseTypeModel
-                {
-                    Code = "EXT",
-                    Desc = "Extra Expenses",
-                    Status = "A",
-                    UserId = "moneytor_admin"
-                }
-            );
+            //modelBuilder.Entity<ExpenseTypeModel>().HasData(
+            //    new ExpenseTypeModel
+            //    {
+            //        Code = "VAR",
+            //        Desc = "Variable Expenses",
+            //        Status = "A",
+            //        UserId = "moneytor_admin"
+            //    },
+            //    new ExpenseTypeModel
+            //    {
+            //        Code = "FIX",
+            //        Desc = "Fixed Expenses",
+            //        Status = "A",
+            //        UserId = "moneytor_admin"
+            //    },
+            //    new ExpenseTypeModel
+            //    {
+            //        Code = "EXT",
+            //        Desc = "Extra Expenses",
+            //        Status = "A",
+            //        UserId = "moneytor_admin"
+            //    }
+            //);
 
-            modelBuilder.Entity<ExpenseCategoryModel>().HasData(
-                new ExpenseCategoryModel
-                {
-                    Code = "EC_FOOD",
-                    Desc = "Food",
-                    ExpenseTypeCode = "VAR",
-                    DeductionTypeCode = "DLD",
-                    BudgetTypeCode = "DLY",
-                    StandardBudgetAmount = 200,
-                    BudgetCurrency = "PHP",
-                    CalculatorCode = null,
-                    UserId = "zdencenzo",
-                    Status = "A"
-                },
-                new ExpenseCategoryModel
-                {
-                    Code = "EC_GAS",
-                    Desc = "Gasoline",
-                    ExpenseTypeCode = "VAR",
-                    DeductionTypeCode = "DLD",
-                    BudgetTypeCode = "BMT",
-                    StandardBudgetAmount = 250,
-                    BudgetCurrency = "PHP",
-                    CalculatorCode = null,
-                    UserId = "zdencenzo",
-                    Status = "A"
-                },
-                new ExpenseCategoryModel
-                {
-                    Code = "EC_PERSONAL",
-                    Desc = "Personal",
-                    ExpenseTypeCode = "VAR",
-                    DeductionTypeCode = "TLD",
-                    BudgetTypeCode = "BMT",
-                    StandardBudgetAmount = 1000,
-                    BudgetCurrency = "PHP",
-                    CalculatorCode = null,
-                    UserId = "zdencenzo",
-                    Status = "A"
-                }
-            );
+            //modelBuilder.Entity<ExpenseCategoryModel>().HasData(
+            //    new ExpenseCategoryModel
+            //    {
+            //        Code = "EC_FOOD",
+            //        Desc = "Food",
+            //        ExpenseTypeCode = "VAR",
+            //        DeductionTypeCode = "DLD",
+            //        BudgetTypeCode = "DLY",
+            //        StandardBudgetAmount = 200,
+            //        BudgetCurrency = "PHP",
+            //        CalculatorCode = null,
+            //        UserId = "zdencenzo",
+            //        Status = "A"
+            //    },
+            //    new ExpenseCategoryModel
+            //    {
+            //        Code = "EC_GAS",
+            //        Desc = "Gasoline",
+            //        ExpenseTypeCode = "VAR",
+            //        DeductionTypeCode = "DLD",
+            //        BudgetTypeCode = "BMT",
+            //        StandardBudgetAmount = 250,
+            //        BudgetCurrency = "PHP",
+            //        CalculatorCode = null,
+            //        UserId = "zdencenzo",
+            //        Status = "A"
+            //    },
+            //    new ExpenseCategoryModel
+            //    {
+            //        Code = "EC_PERSONAL",
+            //        Desc = "Personal",
+            //        ExpenseTypeCode = "VAR",
+            //        DeductionTypeCode = "TLD",
+            //        BudgetTypeCode = "BMT",
+            //        StandardBudgetAmount = 1000,
+            //        BudgetCurrency = "PHP",
+            //        CalculatorCode = null,
+            //        UserId = "zdencenzo",
+            //        Status = "A"
+            //    }
+            //);
         }
     }
 }

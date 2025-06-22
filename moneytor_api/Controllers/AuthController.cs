@@ -18,6 +18,7 @@ namespace moneytor_api.Controllers
     {
         public static User user = new User();
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDto request)
         {
@@ -32,6 +33,7 @@ namespace moneytor_api.Controllers
 
         #region LOGIN ENDPOINT
         //Main endpoint for login
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<TokenResponseDto>> Login(UserDto request)
         {
@@ -87,12 +89,25 @@ namespace moneytor_api.Controllers
         [HttpPost("refresh-token")]
         public async Task<ActionResult<TokenResponseDto>> RefreshToken(RefreshTokenRequestDto request)
         {
+            var refreshToken = Request.Cookies["refresh_token"];    //Retrieve refresh token from HttpOnly Cookies
+            request.RefreshToken = refreshToken ?? "";
             var result = await authService.RefreshTokensAsync(request);
             if(result is null || result.AccessToken is null || result.RefreshToken is null)
             {
                 return Unauthorized("Invalid refresh token.");
             }
-            return Ok(result);
+
+            SetAccessTokenCookie(result.AccessToken);   // Set access token in HttpOnly cookie
+            SetRefreshTokenCookie(result.RefreshToken); // Set refresh token in HttpOnly cookie
+
+            // Return user info but not the tokens (they're in cookies now)
+            return Ok(new
+            {
+                token = result.AccessToken,
+                userId = result.UserId,
+                username = result.Username,
+                role = result.Role
+            });
         }
 
 
