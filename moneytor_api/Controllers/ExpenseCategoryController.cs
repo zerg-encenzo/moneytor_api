@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using moneytor_api.DbContexts;
 using moneytor_api.Models;
+using moneytor_api.Models.MasterModels;
 
 namespace moneytor_api.Controllers
 {
@@ -35,8 +36,6 @@ namespace moneytor_api.Controllers
                 .Include(et => et.ExpenseType)
                 .Include(dt => dt.DeductionType)
                 .Include(bt => bt.BudgetType)
-                //.Where(ec => ec.Status != MoneytorTransactionStatus.Cancelled //TODO: FIX This using Enum
-                //    && ec.UserId == UserInfo.Username) //TODO: Cix using authentication
                 .ToListAsync());
         }
 
@@ -47,8 +46,8 @@ namespace moneytor_api.Controllers
         public async Task<ActionResult<ExpenseCategoryModel>> GetExpensesCategoryByCode(string code)
         {
             var category = await _context.ExpenseCategory
-                .Include(bc => bc.ExpenseType)
-                .Include(bc => bc.DeductionType)
+                .Include(et => et.ExpenseType)
+                .Include(dt => dt.DeductionType)
                 .Include(bc => bc.BudgetType)
                 .FirstOrDefaultAsync(category => category.Code == code);
                 

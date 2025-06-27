@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using moneytor_api.Models.MasterModels;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,9 +19,8 @@ namespace moneytor_api.Models
 
         [Column(TypeName = "decimal(18,2)")]
         public required decimal StandardBudgetAmount { get; set; }
-
         public required string BudgetCurrency { get; set; }
-        public string? CalculatorCode { get; set; }
+        public string? Ionicon { get; set; }
         public required string UserId { get; set; }
         public required string Status { get; set; }
 

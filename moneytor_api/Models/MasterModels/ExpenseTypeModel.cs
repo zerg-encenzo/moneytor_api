@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace moneytor_api.Models
+namespace moneytor_api.Models.MasterModels
 {
-    public class DeductionTypeModel
+    public class ExpenseTypeModel
     {
         [Key]
         public required string Code { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace moneytor_api.Models
+﻿namespace moneytor_api.Models.TransactionModels
 {
     public class MonthlyBudgetHeaderModel
     {
