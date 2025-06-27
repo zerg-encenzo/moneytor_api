@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace moneytor_api.Models
+namespace moneytor_api.Models.MasterModels
 {
     public class BudgetTypeModel
     {
